@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class TicTacToeBoard extends JPanel implements ActionListener{
 
@@ -22,7 +23,7 @@ public class TicTacToeBoard extends JPanel implements ActionListener{
     public static String INITIAL = "initial";
 
 
-    // Empty constructor for actionlistener object instantiations
+    // Empty constructor for actionListener object instantiations
     public TicTacToeBoard() {
 
     }
@@ -41,7 +42,6 @@ public class TicTacToeBoard extends JPanel implements ActionListener{
         current_player = TicTacToeLogic.player(board);
 
 
-        System.out.println("The user choosed "+user);
         // Initializing the board and set each grid to be empty
         for (int i = 0; i < board.length; i++){
             for (int j = 0; j < board.length; j++){
@@ -53,6 +53,18 @@ public class TicTacToeBoard extends JPanel implements ActionListener{
         setLayout(new FlowLayout());
         setSize(boardSide, boardSide);
         BOARD_SIDE = boardSide;
+
+        // if the the user chooses O, meaning to always make moves after X
+        // then make ai move
+        if (user == TicTacToeLogic.O){
+            // Getting ai move and apply to the board
+            int[] aimove = new int[]{Helpers.getRandomNumber(0, 2), Helpers.getRandomNumber(0, 2)};
+            board = TicTacToeLogic.result(board, aimove);
+
+            // update board including the new ai move
+            update();
+            state++;
+        }
 
         JPanel biggerContainer = new JPanel();
         biggerContainer.setSize(300, 300);
@@ -75,29 +87,32 @@ public class TicTacToeBoard extends JPanel implements ActionListener{
             return;
         }
 
-        char selectedGrid;
-        int[] action;
-        System.out.println("Current player: " + current_player);
+        // Getting information about the grid
         int i = Character.getNumericValue(command.charAt(0));
         int j = Character.getNumericValue(command.charAt(1));
-        System.out.println("User action: (" + i + ", " + j + ")");
+        int[] action = new int[]{i, j};
 
+        // Make user move
+        board = TicTacToeLogic.result(board, new int[]{i, j});
 
-
-
-        selectedGrid = board[i][j];
-        action = new int[]{i, j};
-        board[i][j] = current_player;
-        check();
-        displayBoard(board);
+        // update board including the new user move
+        update();
         state++;
 
-        current_player = TicTacToeLogic.player(board);
+        // Getting ai move and apply to the board
         int[] aimove = TicTacToeLogic.minimax(board);
         board = TicTacToeLogic.result(board, aimove);
-        check();
-        displayBoard(board);
+
+        // update board including the new ai move
+        update();
         state++;
+
+
+        current_player = TicTacToeLogic.player(board);
+
+
+        displayBoard(board);
+
     }
 
     /**
@@ -222,7 +237,7 @@ public class TicTacToeBoard extends JPanel implements ActionListener{
 
     }
 
-    private void check(){
+    private void update(){
         JPanel newPanel = renderBoard(board);
         char winner = TicTacToeLogic.winner(board);
         boolean someoneWon = winner != TicTacToeLogic.EMPTY;

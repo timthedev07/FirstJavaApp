@@ -42,8 +42,8 @@ public class TicTacToe extends JPanel{
         homeRedirect.addActionListener(new Control.Router());
 
         reset = new JButton("Reset Game");
-        reset.setActionCommand("resetGame");
-        reset.addActionListener(board);
+        reset.setActionCommand("resetTTTGame");
+        reset.addActionListener(new Control.Router());
 
         JPanel boardContainer = new JPanel();
         boardContainer.setLayout(new GridBagLayout());

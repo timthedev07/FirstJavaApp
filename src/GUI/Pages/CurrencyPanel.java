@@ -3,22 +3,12 @@ package GUI.Pages;
 import GUI.Control.Router;
 import Helper.AutoCompletion;
 import Helper.CurrencyExchange;
-import Helper.DBConn;
 import Helper.Helpers.JFloatField;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
 

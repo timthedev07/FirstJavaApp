@@ -3,6 +3,7 @@ package Helper;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TicTacToeLogic {
@@ -64,12 +65,11 @@ public class TicTacToeLogic {
             }
         }
 
-        int[][] res = new int[9][2];
+        int[][] res = new int[tmp.size()][2];
 
         for (int k = 0; k < tmp.size(); k++){
             res[k] = tmp.get(k);
         }
-
         return res;
     }
 
@@ -85,7 +85,11 @@ public class TicTacToeLogic {
         for(int i = 0; i < board.length; i++) {
             copy[i] = board[i].clone();
         }
-        copy[action[0]][action[1]] = currentPlayer;
+        try {
+            copy[action[0]][action[1]] = currentPlayer;
+        } catch(java.lang.NullPointerException e){
+            return board;
+        }
         return copy;
     }
 
@@ -144,7 +148,6 @@ public class TicTacToeLogic {
 
     public static int[] minimax(char[][] board){
         char curr_player = player(board);
-        System.out.println("Actions: "+actions(board));
         if (terminal(board)) {
             return null;
         }
@@ -170,7 +173,6 @@ public class TicTacToeLogic {
         for (int[] action : actions(board)){
             buffer = min_value(result(board, action));
             int v = buffer.getValue();
-            System.out.println("The best the opponent(O) can do: " + v);
             if (v > curr_best) {
                 curr_best = v;
                 optimalMove = action;
@@ -193,7 +195,6 @@ public class TicTacToeLogic {
         for (int[] action : actions(board)) {
             buffer = max_value(result(board, action));
             int v = buffer.getValue();
-            System.out.println("The best the opponent(X) can do: " + v);
             if (v < curr_best) {
                 curr_best = v;
                 optimalMove = action;

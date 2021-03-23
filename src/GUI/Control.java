@@ -117,7 +117,7 @@ public class Control extends JFrame {
             LocalDate today = LocalDate.parse(todayString, dtf);
             final long days = Math.abs(ChronoUnit.DAYS.between(today, date1));
             if (days > 0){
-                CurrencyUpdate.update();
+                updateDB = true;
             }
 
         } catch(SQLException eee){
@@ -203,7 +203,9 @@ public class Control extends JFrame {
                 CardLayout cl = (CardLayout) mainPanel.getLayout();
                 cl.show(mainPanel, LOGIN_PANEL_NAME);
             } else if (command.equals("currencyRedirect")) {
-
+                if (updateDB){
+                    CurrencyUpdate.update();
+                }
                 CardLayout cl = (CardLayout) mainPanel.getLayout();
                 currency_panel.resetField();
                 cl.show(mainPanel, CURRENCY_PANEL_NAME);
@@ -217,7 +219,7 @@ public class Control extends JFrame {
             } else if (command.equals("tictactoeRedirect")) {
                 CardLayout cl = (CardLayout) mainPanel.getLayout();
                 cl.show(mainPanel, TICTACTOE_PANEL_NAME);
-            } else if (command.equals("chooseRedirect")){
+            } else if (command.equals("chooseRedirect") || command.equals("resetTTTGame")){
                 CardLayout cl = (CardLayout) mainPanel.getLayout();
                 cl.show(mainPanel, CHOOSE_PLAYER_PANEL_NAME);
             } else if (command.equals("chooseX")){
