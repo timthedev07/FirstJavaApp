@@ -1,8 +1,7 @@
 package GUI;
 
-import GUI.Pages.*;
-import GUI.Pages.TicTacToe;
-import Helper.CurrencyExchange;
+import GUI.pages.*;
+import GUI.pages.TicTacToe;
 import Helper.CurrencyUpdate;
 import Helper.DBConn;
 import Helper.TicTacToeLogic;
@@ -82,7 +81,7 @@ public class Control extends JFrame {
 
 
         // Bringing in the component panels
-        LoginPanel login_panel = new LoginPanel(WINDOW_WIDTH, WINDOW_HEIGHT);
+        LoginPanel login_panel = new LoginPanel();
         RegisterPanel register_panel = new RegisterPanel(WINDOW_WIDTH, WINDOW_HEIGHT);
         Home home_panel = new Home(WINDOW_WIDTH, WINDOW_HEIGHT);
         currency_panel = new CurrencyPanel(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -146,11 +145,11 @@ public class Control extends JFrame {
 
         // Setting up the window with constants defined above
         add(mainPanel);
-        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("My First App");
         setLocationByPlatform(true);
         setVisible(false);
+        pack();
     }
 
     public static void changeFont(Component component, Font font) {

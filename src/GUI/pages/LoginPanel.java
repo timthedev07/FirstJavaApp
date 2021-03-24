@@ -1,4 +1,4 @@
-package GUI.Pages;
+package GUI.pages;
 
 import Helper.*;
 import GUI.Control;
@@ -21,75 +21,72 @@ public class LoginPanel extends JPanel {
 
     public static Control.CommunicationWithHome communication = new Control.CommunicationWithHome("register");
 
-
-    // This is to move the entire `div` of things according to the context
-    public static int YCHANGE = 150;
-    public static int XCHANGE = 60;
-
+    private static final int PADDING = 30;
     // Some labels, button, groups and fields
-    private static JLabel usernameLabel;
     private static JTextField usernameInputField;
-    private static JLabel passwordLabel;
     private static JPasswordField passwordInputField;
     private static JButton submit;
     private static JLabel message;
-    private static JLabel title = Helpers.generateTitle();
     private static JButton registerRedirect = new JButton("register");
-    private static JLabel noAccount = new JLabel("No account? Register here: ");
 
     // Console color print
-    public static final String CONSOLE_RED = "\u001B[31m";
     public static final String CONSOLE_GREEN = "\u001B[32m";
     public static final String CONSOLE_RESET = "\u001B[0m";
 
-    public LoginPanel(int windowWidth, int windowHeight) {
+    public LoginPanel() {
 
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(windowWidth - 200, windowHeight - 500));
 
-
+        JLabel title = Helpers.generateTitle();
         JPanel titleContainer = new JPanel();
-        titleContainer.setLayout(new FlowLayout());
+        titleContainer.setLayout(new FlowLayout(FlowLayout.LEFT, PADDING, PADDING));
         titleContainer.add(title);
 
-
-        usernameLabel = new JLabel("Username: ");
+        // the username row
+        JLabel usernameLabel = new JLabel("Username: ");
         usernameInputField = new JTextField(50);
 
         // The password row
-        passwordLabel = new JLabel("Password: ");
-        passwordInputField = new JPasswordField(150);
+        JLabel passwordLabel = new JLabel("Password: ");
+        passwordInputField = new JPasswordField(50);
 
         JPanel form = new JPanel();
         form.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
         c.gridx = 0;
         c.gridy = 0;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(0,20,0,0);
         form.add(usernameLabel, c);
 
         c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
         c.gridx = 0;
         c.gridy = 1;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(0,20,0,0);
         form.add(passwordLabel, c);
 
         c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
         c.gridx = 1;
         c.gridy = 0;
-        form.add(usernameInputField, c);
+        c.weightx = 0.1;
+        c.ipadx = 200;
+        JPanel usernameFieldContainer = new JPanel();
+        usernameFieldContainer.add(usernameInputField);
+        usernameFieldContainer.setSize(new Dimension(usernameInputField.getWidth() + 10, usernameInputField.getHeight() + 10));
+        form.add(usernameFieldContainer, c);
 
         c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
         c.gridx = 1;
         c.gridy = 1;
-        form.add(passwordInputField, c);
+        c.weightx = 0.001;
+        c.weightx = 0.001;
+        c.ipadx = 50;
+        JPanel passwordFieldContainer = new JPanel();
+        passwordFieldContainer.add(passwordInputField);
+        passwordFieldContainer.setSize(new Dimension(passwordInputField.getWidth() + 10, passwordInputField.getHeight() + 10));
+        form.add(passwordFieldContainer, c);
 
         // The message label, the text depends on the query's result.
         message = new JLabel();
@@ -105,15 +102,15 @@ public class LoginPanel extends JPanel {
 
 
         JPanel submitContainer = new JPanel();
-        submitContainer.setLayout(new FlowLayout());
+        submitContainer.setLayout(new FlowLayout(FlowLayout.RIGHT, PADDING, PADDING));
         submitContainer.add(submit);
+
 
         // adding everything to the layout
 
-        add(submitContainer, BorderLayout.PAGE_END);
         add(titleContainer, BorderLayout.PAGE_START);
-        add(form, BorderLayout.CENTER);
-
+        add(form, BorderLayout.LINE_START);
+        add(submitContainer, BorderLayout.PAGE_END);
         System.out.println(CONSOLE_GREEN + "Finish setting up login panel" + CONSOLE_RESET);
     }
 

@@ -1,4 +1,4 @@
-package GUI.Pages;
+package GUI.pages;
 
 import GUI.Control.Router;
 import Helper.AutoCompletion;
